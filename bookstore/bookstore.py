@@ -4,7 +4,6 @@ def create_bookstore(name):
     return {'name': name, 'books': [], 'authors': []}
 
 def search_dic(dic,val,obj, cList=False):
-    print('GBBA')
     results = []
     for i in dic:
         if i[val] == obj:

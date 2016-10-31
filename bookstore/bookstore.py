@@ -1,61 +1,40 @@
+import pprint
+
 def create_bookstore(name):
-    a={}
-    a['name']=name
-    a['authors']=[]
-    a['id']=[]
-    a['books']=[]
-    a['isbn']=[]
-    return a
+    return {'name': name, 'books': [], 'authors': []}
+
+def search_dic(dic,val,obj, cList=False):
+    print('GBBA')
+    results = []
+    for i in dic:
+        if i[val] == obj:
+            if not cList:
+                return i
+            else:
+                results.append(i)
+    return results                
 
 def add_author(bookstore, name, nationality):
-    bookstore['authors'].append(name)
-    bookstore['id'].append(name+nationality)
-    auth={}
-    auth['name']=name
-    auth['nationality']=nationality
-    auth['id']=name+nationality
-    bookstore[name]=auth
-    return auth
+    author = {'name': name, 'nationality': nationality, 'id': len(bookstore['authors'])}
+    bookstore['authors'].append(author)
+    return author
 
 def get_author_by_name(bookstore, name):
-    return bookstore[name]
+    return search_dic(bookstore['authors'],'name',name)
 
-    
 def get_author_by_id(bookstore, author_id):
-    return bookstore[bookstore['authors'][idtoauth(bookstore, author_id)]]
-    #return store['authors'][idtoauth(bookstore, author_id)]
-
-def idtoauth(bookstore, author_id):
-    for i,a in enumerate(bookstore['id']):
-        if a==author_id:#bookstore['authors'][0]
-            return i    
+    return search_dic(bookstore['authors'],'id',author_id)        
 
 def add_book(bookstore, title, isbn, author_id):
-    bookstore['books'].append(title)
-    bookstore['isbn'].append(isbn)
-    book={}
-    book['title']=title
-    book['isbn']=isbn
-    book['id']=isbn
-    book['author_id']=author_id
-    bookstore[title]=book
+    book = {'title': title, 'isbn': isbn, 'author_id': author_id, 'id': len(bookstore['books'])}
+    bookstore['books'].append(book)
     return book
 
 def get_book_by_title(bookstore, title):
-    return bookstore[title]
+    return search_dic(bookstore['books'],'title',title)           
 
 def get_book_by_id(bookstore, book_id):
-    return bookstore[bookstore['books'][isbntobook(bookstore, book_id)]]
+    return search_dic(bookstore['books'],'id',book_id)         
 
-def isbntobook(bookstore, book_id):
-    for i,a in enumerate(bookstore['isbn']):
-        if a==book_id:
-            return i
-    
 def get_books_by_author(bookstore, author_id):
-    b=[]
-    for i in bookstore['books']:
-        if bookstore[i]['author_id']==author_id:
-            print(bookstore[i]['title'])
-            b.append(bookstore[i])
-    return b
+    return search_dic(bookstore['books'],'author_id',author_id, cList=True)
